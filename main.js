@@ -57,17 +57,18 @@ const posts = [
     }
 ];
 
+const likedPosts = [];
+
 /* Milestone 1:
 Prendendo come riferimento il layout di esempio presente nell'html, 
 stampiamo i post del nostro feed. */
-
 
 /* SELEZIONA IL CONTAINER DA HTML */
 const container = document.getElementById('container');
 
 /* CICLO PER MOSTRARE A SCHERMO L'ARRAY DI OGGETTI */
 for (let i=0; i<posts.length; i++){
-    
+
     /* CREA ELEMENTO POST */
     const post = document.createElement('div');
 
@@ -107,4 +108,46 @@ for (let i=0; i<posts.length; i++){
 
     /* APPENDI "POST" AL CONTAINER */
     container.append(post);
+
+};
+
+miPiace();
+
+console.log(likedPosts);
+/* Milestone 2 -
+ Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo
+il counter dei likes relativo. Salviamo in un secondo array gli id dei post ai quali abbiamo 
+messo il like. */
+
+
+function miPiace(){
+        
+    /* SELEZIONA IL TASTO "MI PIACE" */
+    const btnLike = document.querySelector('.js-like-button');
+
+    posts.forEach(function(post) {
+
+        /* AGGIUNGI EVENTO SUL BUTTON "MI PIACE" */
+        btnLike.addEventListener('click', function() {
+            
+            /* METTI IL COLORE ROSSO AL TESTO DEL BOTTONE "MI PIACE" CLICCATO */
+            this.style.color= 'red';
+
+            /* AGGIUNGI UN LIKE AL CONTEGGIO DEL LIKE E AGGIORNA*/
+            post.likes+=1;
+            const numeroLike = document.getElementById(`like-counter-${post.id}`);
+            numeroLike.innerHTML = post.likes;
+            console.log(post.likes); 
+            
+            /* Salviamo in un secondo array gli id dei post ai quali abbiamo 
+               messo il like. */
+            if (!likedPosts.includes(post.id)) {
+                likedPosts.push(post.id);
+                console.log(likedPosts);
+            }
+
+        });
+
+    });
+
 };
